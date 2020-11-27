@@ -14,29 +14,29 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, "docs")));
 
 let artists = [];
-let steps = [];
+let actions = [];
 
 io.on("connection", (socket) => {
-	console.log(`New connection`, socket.id);
-	artists.push({
-		id: socket.id,
+	console.log(`New connection ${socket.id}`);
+	// socket.emit("sync", actions);
+	socket.emit("actions sync", actions);
+
+	socket.on("draw action", (msg) => {
+		actions.push(msg);
+		socket.broadcast.emit("draw action", msg);
 	});
-	socket.emit("canvas init", steps);
-	socket.on("broadcast", (msg) => {
-		console.log(msg);
-		socket.broadcast.emit("broadcast", msg);
-	});
-	socket.on("stroke", (msg) => {
-		socket.broadcast.emit("stroke", msg);
-		steps.push(msg);
-		console.log(steps.length);
-		// console.log(msg);
-	});
-	socket.on("delete canvas", () => {
-		io.emit("delete canvas");
-		steps = [];
+
+	socket.on("undo", () => {
+		actions.pop();
+		sync();
 	});
 });
+
+function sync() {
+	io.emit("sync", actions);
+}
+
+setInterval(sync, 5000);
 
 server.listen(port, () => {
 	console.log(`Server is listening on port ${port}`);
