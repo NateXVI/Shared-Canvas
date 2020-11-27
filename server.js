@@ -19,7 +19,7 @@ let actions = [];
 io.on("connection", (socket) => {
 	console.log(`New connection ${socket.id}`);
 	// socket.emit("sync", actions);
-	socket.emit("actions sync", actions);
+	sync();
 
 	socket.on("draw action", (msg) => {
 		actions.push(msg);
@@ -28,6 +28,14 @@ io.on("connection", (socket) => {
 
 	socket.on("undo", () => {
 		actions.pop();
+		sync();
+	});
+
+	socket.on("delete", () => {
+		let l = actions.length;
+		for (let i = 0; i < l; i++) {
+			actions.pop();
+		}
 		sync();
 	});
 });

@@ -40,6 +40,13 @@ function setup() {
 	document.getElementById("eraser-button").addEventListener("click", function () {
 		currentTool = "eraser";
 	});
+	// document.getElementById("undo-button").addEventListener("click", function () {
+	// 	undo();
+	// });
+	// document.getElementById("delete-button").addEventListener("click", function () {
+	// 	socket.emit("delete");
+	// 	console.log("deleted");
+	// });
 }
 
 function draw() {
@@ -148,6 +155,10 @@ function undo() {
 function keyPressed() {
 	if (keyIsDown(CONTROL) && key == "z") {
 		undo();
+	}
+	if (key == "d") {
+		socket.emit("delete");
+		console.log("deleted");
 	}
 }
 
