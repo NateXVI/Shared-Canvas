@@ -8,7 +8,7 @@ let points = [];
 const socketUrl = "https://shared-canvass.herokuapp.com/";
 
 function setup() {
-	createCanvas(500, 500);
+	createCanvas(900, 600);
 	// frameRate(10);
 	background(244, 248, 252);
 	penColor = color(255, 0, 0);
