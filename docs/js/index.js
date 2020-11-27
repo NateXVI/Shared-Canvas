@@ -5,7 +5,7 @@ let penColor;
 
 let points = [];
 
-const socketUrl = "ws://shared-canvass.herokuapp.com/";
+const socketUrl = "https://shared-canvass.herokuapp.com/";
 
 function setup() {
 	createCanvas(500, 500);
