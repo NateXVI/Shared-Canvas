@@ -5,6 +5,8 @@ let penColor;
 
 let points = [];
 
+const socketUrl = "ws://shared-canvass.herokuapp.com/";
+
 function setup() {
 	createCanvas(500, 500);
 	// frameRate(10);
@@ -12,7 +14,7 @@ function setup() {
 	penColor = color(255, 0, 0);
 	console.log(penColor.levels);
 	stroke(penColor);
-	socket = io("ws://localhost:3000/");
+	socket = io(socketUrl);
 
 	socket.on("canvas init", function (msg) {
 		for (let i in msg) {
