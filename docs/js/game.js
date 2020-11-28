@@ -41,7 +41,7 @@ function setup() {
 
 	socket.on("sync", function (msg) {
 		actions = msg;
-		console.log(msg);
+		console.log("synced");
 	});
 
 	document.getElementById("pen-button").addEventListener("click", function () {
@@ -49,6 +49,18 @@ function setup() {
 	});
 	document.getElementById("eraser-button").addEventListener("click", function () {
 		currentTool = "eraser";
+	});
+	document.getElementById("bucket-button").addEventListener("click", function () {
+		currentTool = "bucket";
+	});
+	document.getElementById("undo-button").addEventListener("click", function () {
+		undo();
+	});
+	document.getElementById("redo-button").addEventListener("click", function () {
+		redo();
+	});
+	document.getElementById("delete-button").addEventListener("click", function () {
+		socket.emit("delete");
 	});
 	let colorButtons = document.getElementsByClassName("color");
 	console.log(
@@ -69,21 +81,17 @@ function setup() {
 			colorviewer.style.background = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
 		});
 	}
-
-	// document.getElementById("undo-button").addEventListener("click", function () {
-	// 	undo();
-	// });
-	// document.getElementById("delete-button").addEventListener("click", function () {
-	// 	socket.emit("delete");
-	// 	console.log("deleted");
-	// });
 }
 
 function draw() {
 	background(backgroundColor);
 	drawActions();
 
+	push();
+	fill(penColor);
+	stroke(0);
 	circle(mouseX, mouseY, penSize);
+	pop();
 }
 
 function drawActions() {
@@ -99,6 +107,9 @@ function drawAction(action) {
 		switch (action.tool) {
 			case "pen":
 				drawPenAction(action);
+				break;
+			case "bucket":
+				drawBucketAction(action);
 				break;
 		}
 	} catch (error) {
@@ -118,34 +129,55 @@ function drawPenAction(action) {
 	pop();
 }
 
+function drawBucketAction(action) {
+	// location = action.location;
+	// function pos(x, y) {
+	// 	return 4 * (y * width + x);
+	// }
+	// loadPixels();
+	// pixels[pos(...location)] = 0;
+	// updatePixels();
+}
+
 function mousePressed() {
-	switch (currentTool) {
-		case "pen":
-		case "eraser":
-			currentAction = newAction(currentTool);
-			currentAction.strokes.push([mouseX, mouseY]);
-			currentAction.strokes.push([mouseX, mouseY]);
-			break;
+	if (mouseX > -10 && mouseX < width + 10 && mouseY > -10 && mouseY < height + 10) {
+		switch (currentTool) {
+			case "pen":
+			case "eraser":
+				currentAction = newAction(currentTool);
+				currentAction.strokes.push([mouseX, mouseY]);
+				currentAction.strokes.push([mouseX, mouseY]);
+				break;
+			case "bucket":
+				currentAction = newAction(currentTool);
+				actions.push(currentAction);
+				currentAction = undefined;
+				sendAction();
+		}
 	}
 }
 
 function mouseReleased() {
-	actions.push(currentAction);
-	currentAction = undefined;
-	switch (currentTool) {
-		case "pen":
-		case "eraser":
-			sendAction();
-			break;
+	if (currentAction != undefined) {
+		actions.push(currentAction);
+		currentAction = undefined;
+		switch (currentTool) {
+			case "pen":
+			case "eraser":
+				sendAction();
+				break;
+		}
 	}
 }
 
 function mouseDragged() {
-	switch (currentTool) {
-		case "pen":
-		case "eraser":
-			currentAction.strokes.push([mouseX, mouseY]);
-			break;
+	if (currentAction != undefined) {
+		switch (currentTool) {
+			case "pen":
+			case "eraser":
+				currentAction.strokes.push([mouseX, mouseY]);
+				break;
+		}
 	}
 }
 
@@ -174,6 +206,12 @@ function newAction(type) {
 				strokes: [],
 			};
 			break;
+		case "bucket":
+			action = {
+				tool: "bucket",
+				color: [red(penColor), green(penColor), blue(penColor)],
+				location: [mouseX, mouseY],
+			};
 	}
 	return action;
 }
@@ -182,7 +220,14 @@ function undo() {
 	socket.emit("undo");
 }
 
+function redo() {
+	socket.emit("redo");
+}
+
 function keyPressed() {
+	if (keyIsDown(CONTROL) && key == "x") {
+		redo();
+	}
 	if (keyIsDown(CONTROL) && key == "z") {
 		undo();
 	}

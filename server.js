@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname, "docs")));
 
 let artists = [];
 let actions = [];
+let redo = [];
 
 io.on("connection", (socket) => {
 	console.log(`New connection ${socket.id}`);
@@ -22,21 +23,29 @@ io.on("connection", (socket) => {
 	sync();
 
 	socket.on("draw action", (msg) => {
+		redo = [];
 		actions.push(msg);
 		socket.emit("sync", actions);
 		socket.broadcast.emit("draw action", msg);
 	});
 
 	socket.on("undo", () => {
-		actions.pop();
+		redo.push(actions.pop());
 		sync();
+	});
+
+	socket.on("redo", () => {
+		if (redo.length > 0) {
+			actions.push(redo[redo.length - 1]);
+			redo.pop();
+			sync();
+		}
 	});
 
 	socket.on("delete", () => {
 		let l = actions.length;
-		for (let i = 0; i < l; i++) {
-			actions.pop();
-		}
+		actions = [];
+		redo = [];
 		sync();
 	});
 });

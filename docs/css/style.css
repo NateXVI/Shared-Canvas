@@ -23,6 +23,7 @@ canvas {
 	/* display: grid;
 	grid-template-columns: auto 2fr 1fr; */
 	display: flex;
+	margin-top: 10px;
 }
 
 #colorviewer {
@@ -54,7 +55,10 @@ canvas {
 	flex-wrap: wrap;
 }
 
-.tool {
+#function-buttons {
+	width: 50%;
+	margin: auto;
+	margin-top: 10px;
 }
 
 #shortcuts-container {
