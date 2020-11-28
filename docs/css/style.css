@@ -2,15 +2,61 @@
 html {
 	margin: 0;
 	padding: 0;
+	background: rgb(88, 93, 100);
 }
 
 #game-canvas-container {
 	margin: auto;
+	width: 50%;
 }
 
 canvas {
 	display: block;
-	width: 100%;
+	/* width: 100% !important; */
 	height: auto;
 	margin: auto;
+}
+
+#toolbar {
+	width: 50%;
+	margin: auto;
+	/* display: grid;
+	grid-template-columns: auto 2fr 1fr; */
+	display: flex;
+}
+
+#colorviewer {
+	margin-top: 00.5rem;
+	width: 40px;
+	height: 40px;
+	background: black;
+}
+
+#color-picker {
+	margin: 0.5rem;
+	display: grid;
+	/* width: 0; */
+	/* grid-template-rows: auto; */
+	grid-template-columns: repeat(11, auto);
+}
+
+.color {
+	width: 20px;
+	height: 20px;
+}
+
+.color:hover {
+	border: solid black 2px;
+}
+
+#tool-picker {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tool {
+}
+
+#shortcuts-container {
+	padding: 2rem;
 }

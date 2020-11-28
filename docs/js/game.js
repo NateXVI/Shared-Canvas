@@ -1,7 +1,12 @@
 let socket;
 
-// const backendUrl = "ws://localhost:3000/";
-const backendUrl = "https://shared-canvass.herokuapp.com/";
+const backendUrl = "ws://localhost:3000/";
+// const backendUrl = "https://shared-canvass.herokuapp.com/";
+let colorButtons;
+let canvas;
+let canvasParent;
+let aspectRatio;
+let colorviewer;
 
 let tools = ["pen", "eraser", "bucket"];
 let currentTool = "pen";
@@ -15,9 +20,14 @@ let drawBuffer = [];
 let backgroundColor;
 
 function setup() {
-	gameCanvas = createCanvas(600, 450);
+	gameCanvas = createCanvas(700, 500);
 	gameCanvas.parent("game-canvas-container");
-	backgroundColor = color(244, 248, 252);
+	canvas = document.getElementById("defaultCanvas0");
+	canvasParent = document.getElementById("game-canvas-container");
+	aspectRatio = height / width;
+	windowResized();
+	colorviewer = document.getElementById("colorviewer");
+	backgroundColor = color(255);
 	background(backgroundColor);
 
 	penColor = color(0, 0, 0);
@@ -40,6 +50,26 @@ function setup() {
 	document.getElementById("eraser-button").addEventListener("click", function () {
 		currentTool = "eraser";
 	});
+	let colorButtons = document.getElementsByClassName("color");
+	console.log(
+		colorButtons[1]
+			.getAttribute("picker-color")
+			.split(",")
+			.map((value, index) => parseInt(value))
+	);
+	for (let i = 0; i < colorButtons.length; i++) {
+		colorButtons[i].addEventListener("click", function (event) {
+			console.log(event.target);
+			let c = event.target
+				.getAttribute("picker-color")
+				.split(",")
+				.map((v) => parseInt(v));
+			penColor = color(...c);
+
+			colorviewer.style.background = `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
+		});
+	}
+
 	// document.getElementById("undo-button").addEventListener("click", function () {
 	// 	undo();
 	// });
@@ -65,10 +95,14 @@ function drawActions() {
 }
 
 function drawAction(action) {
-	switch (action.tool) {
-		case "pen":
-			drawPenAction(action);
-			break;
+	try {
+		switch (action.tool) {
+			case "pen":
+				drawPenAction(action);
+				break;
+		}
+	} catch (error) {
+		console.log(error);
 	}
 }
 
@@ -135,11 +169,7 @@ function newAction(type) {
 		case "eraser":
 			action = {
 				tool: "pen",
-				color: [
-					red(backgroundColor),
-					green(backgroundColor),
-					blue(backgroundColor),
-				],
+				color: [red(backgroundColor), green(backgroundColor), blue(backgroundColor)],
 				size: penSize,
 				strokes: [],
 			};
@@ -165,4 +195,10 @@ function keyPressed() {
 function mouseWheel(a) {
 	penSize += a.delta < 0 ? 4 : -4;
 	penSize = constrain(penSize, 1, 45);
+}
+
+function windowResized() {
+	let w = canvasParent.offsetWidth;
+	canvas.style.width = `${w}px`;
+	canvas.style.height = `${w * aspectRatio}px`;
 }

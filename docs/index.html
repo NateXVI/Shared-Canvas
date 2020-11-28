@@ -20,10 +20,44 @@
 		<!-- <script src="js/index.js"></script> -->
 	</head>
 	<body>
-		<div id="game-canvas-container"></div>
-		<button class="btn btn-block btn-primary" id="pen-button">Pen</button>
-		<button class="btn btn-block btn-primary" id="eraser-button">Eraser</button>
+		<div id="game">
+			<div id="game-canvas-container"></div>
+			<div id="toolbar">
+				<div id="colorviewer"></div>
+				<div id="color-picker">
+					<div id="white" class="color" picker-color="255,255,255" style="background: white"></div>
+					<div id="light-gray" class="color" picker-color="211,211,211" style="background: rgb(211, 211, 211)"></div>
+					<div id="red" class="color" picker-color="255,0,0" style="background: red"></div>
+					<div id="orange" class="color" picker-color="255,165,0" style="background: orange"></div>
+					<div id="yellow" class="color" picker-color="255,255,0" style="background: yellow"></div>
+					<div id="lime-green" class="color" picker-color="50,205,50" style="background: rgb(50, 205, 50)"></div>
+					<div id="deep-sky-blue" class="color" picker-color="0,191,255" style="background: rgb(0, 191, 255)"></div>
+					<div id="blue" class="color" picker-color="0,0,255" style="background: rgb(0, 0, 255)"></div>
+					<div id="purple" class="color" picker-color="153,50,204" style="background: rgb(153, 50, 204)"></div>
+					<div id="pink" class="color" picker-color="255,192,203" style="background: rgb(255, 192, 203)"></div>
+					<div id="brown" class="color" picker-color="152,118,84" style="background: rgb(152, 118, 84)"></div>
+					<div id="black" class="color" picker-color="0,0,0" style="background: rgb(0, 0, 0)"></div>
+					<div id="dark-grey" class="color" picker-color="105,105,105" style="background: rgb(105, 105, 105)"></div>
+					<div id="maroon" class="color" picker-color="128,0,0" style="background: rgb(128, 0, 0)"></div>
+					<div id="dark-orange" class="color" picker-color="255,69,0" style="background: rgb(255, 69, 0)"></div>
+					<div id="dark-yellow" class="color" picker-color="146,146,0" style="background: rgb(146, 146, 0)"></div>
+				</div>
+				<div id="tool-picker">
+					<button class="tool btn btn-primary" id="pen-button">Pen</button>
+					<button class="tool btn btn-primary" id="eraser-button">Eraser</button>
+				</div>
+			</div>
+		</div>
 		<!-- <button class="btn btn-block btn-secondary" id="undo-button">Undo</button>
 		<button class="btn btn-block btn-danger" id="delete-button">Delete</button> -->
+
+		<div id="shortcuts-container">
+			<h3>Shortcuts:</h3>
+			<ul>
+				<li>"ctrl+z" or "command+z" to undo</li>
+				<li>Press "d" to clear the canvas</li>
+				<li>Use scrool wheel to change pen size</li>
+			</ul>
+		</div>
 	</body>
 </html>

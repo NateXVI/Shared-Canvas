@@ -23,6 +23,7 @@ io.on("connection", (socket) => {
 
 	socket.on("draw action", (msg) => {
 		actions.push(msg);
+		socket.emit("sync", actions);
 		socket.broadcast.emit("draw action", msg);
 	});
 
