@@ -1,15 +1,15 @@
 let socket;
 
-// const backendUrl = "ws://localhost:3000/";
-const backendUrl = "https://shared-canvass.herokuapp.com/";
+const backendUrl = 'ws://localhost:3000/';
+// const backendUrl = 'https://shared-canvass.herokuapp.com/';
 let colorButtons;
 let canvas;
 let canvasParent;
 let aspectRatio;
 let colorviewer;
 
-let tools = ["pen", "eraser", "bucket"];
-let currentTool = "pen";
+let tools = ['pen', 'eraser', 'bucket'];
+let currentTool = 'pen';
 let actions = [];
 let currentAction;
 let penColor;
@@ -21,12 +21,12 @@ let backgroundColor;
 
 function setup() {
 	gameCanvas = createCanvas(700, 500);
-	gameCanvas.parent("game-canvas-container");
-	canvas = document.getElementById("defaultCanvas0");
-	canvasParent = document.getElementById("game-canvas-container");
+	gameCanvas.parent('game-canvas-container');
+	canvas = document.getElementById('defaultCanvas0');
+	canvasParent = document.getElementById('game-canvas-container');
 	aspectRatio = height / width;
 	windowResized();
-	colorviewer = document.getElementById("colorviewer");
+	colorviewer = document.getElementById('colorviewer');
 	backgroundColor = color(255);
 	background(backgroundColor);
 
@@ -35,46 +35,49 @@ function setup() {
 
 	socket = io(backendUrl);
 
-	socket.on("draw action", function (msg) {
+	socket.on('draw action', function (msg) {
 		actions.push(msg);
 	});
 
-	socket.on("sync", function (msg) {
+	socket.on('sync', function (msg) {
 		actions = msg;
-		console.log("synced");
+		console.log('synced');
 	});
 
-	document.getElementById("pen-button").addEventListener("click", function () {
-		currentTool = "pen";
+	document.getElementById('pen-button').addEventListener('click', function () {
+		currentTool = 'pen';
 	});
-	document.getElementById("eraser-button").addEventListener("click", function () {
-		currentTool = "eraser";
+	document.getElementById('pencil-button').addEventListener('click', function () {
+		currentTool = 'pencil';
 	});
-	document.getElementById("bucket-button").addEventListener("click", function () {
-		currentTool = "bucket";
+	document.getElementById('eraser-button').addEventListener('click', function () {
+		currentTool = 'eraser';
 	});
-	document.getElementById("undo-button").addEventListener("click", function () {
+	document.getElementById('bucket-button').addEventListener('click', function () {
+		currentTool = 'bucket';
+	});
+	document.getElementById('undo-button').addEventListener('click', function () {
 		undo();
 	});
-	document.getElementById("redo-button").addEventListener("click", function () {
+	document.getElementById('redo-button').addEventListener('click', function () {
 		redo();
 	});
-	document.getElementById("delete-button").addEventListener("click", function () {
-		socket.emit("delete");
+	document.getElementById('delete-button').addEventListener('click', function () {
+		socket.emit('delete');
 	});
-	let colorButtons = document.getElementsByClassName("color");
+	let colorButtons = document.getElementsByClassName('color');
 	console.log(
 		colorButtons[1]
-			.getAttribute("picker-color")
-			.split(",")
+			.getAttribute('picker-color')
+			.split(',')
 			.map((value, index) => parseInt(value))
 	);
 	for (let i = 0; i < colorButtons.length; i++) {
-		colorButtons[i].addEventListener("click", function (event) {
+		colorButtons[i].addEventListener('click', function (event) {
 			console.log(event.target);
 			let c = event.target
-				.getAttribute("picker-color")
-				.split(",")
+				.getAttribute('picker-color')
+				.split(',')
 				.map((v) => parseInt(v));
 			penColor = color(...c);
 
@@ -105,10 +108,10 @@ function drawActions() {
 function drawAction(action) {
 	try {
 		switch (action.tool) {
-			case "pen":
+			case 'pen':
 				drawPenAction(action);
 				break;
-			case "bucket":
+			case 'bucket':
 				drawBucketAction(action);
 				break;
 		}
@@ -118,6 +121,18 @@ function drawAction(action) {
 }
 
 function drawPenAction(action) {
+	let s = action.strokes;
+	let c = action.color;
+	push();
+	stroke(color(action.color));
+	strokeWeight(action.size);
+	for (let i = 0; i < s.length - 1; i++) {
+		line(s[i][0], s[i][1], s[i + 1][0], s[i + 1][1]);
+	}
+	pop();
+}
+
+function drawPencilAction(action) {
 	let s = action.strokes;
 	let c = action.color;
 	push();
@@ -142,13 +157,13 @@ function drawBucketAction(action) {
 function mousePressed() {
 	if (mouseX > -10 && mouseX < width + 10 && mouseY > -10 && mouseY < height + 10) {
 		switch (currentTool) {
-			case "pen":
-			case "eraser":
+			case 'pen':
+			case 'eraser':
 				currentAction = newAction(currentTool);
 				currentAction.strokes.push([mouseX, mouseY]);
 				currentAction.strokes.push([mouseX, mouseY]);
 				break;
-			case "bucket":
+			case 'bucket':
 				currentAction = newAction(currentTool);
 				actions.push(currentAction);
 				currentAction = undefined;
@@ -162,8 +177,8 @@ function mouseReleased() {
 		actions.push(currentAction);
 		currentAction = undefined;
 		switch (currentTool) {
-			case "pen":
-			case "eraser":
+			case 'pen':
+			case 'eraser':
 				sendAction();
 				break;
 		}
@@ -173,8 +188,8 @@ function mouseReleased() {
 function mouseDragged() {
 	if (currentAction != undefined) {
 		switch (currentTool) {
-			case "pen":
-			case "eraser":
+			case 'pen':
+			case 'eraser':
 				currentAction.strokes.push([mouseX, mouseY]);
 				break;
 		}
@@ -184,31 +199,35 @@ function mouseDragged() {
 function sendAction() {
 	let a = actions[actions.length - 1];
 
-	socket.emit("draw action", a);
+	socket.emit('draw action', a);
 }
 
 function newAction(type) {
 	let action;
 	switch (type) {
-		case "pen":
+		case 'pen':
 			action = {
-				tool: "pen",
-				color: [red(penColor), green(penColor), blue(penColor)],
+				tool: 'pen',
+				color: [red(penColor), green(penColor), blue(penColor), 255],
 				size: penSize,
 				strokes: [],
 			};
 			break;
-		case "eraser":
+		case 'eraser':
 			action = {
-				tool: "pen",
-				color: [red(backgroundColor), green(backgroundColor), blue(backgroundColor)],
+				tool: 'pen',
+				color: [
+					red(backgroundColor),
+					green(backgroundColor),
+					blue(backgroundColor),
+				],
 				size: penSize,
 				strokes: [],
 			};
 			break;
-		case "bucket":
+		case 'bucket':
 			action = {
-				tool: "bucket",
+				tool: 'bucket',
 				color: [red(penColor), green(penColor), blue(penColor)],
 				location: [mouseX, mouseY],
 			};
@@ -217,23 +236,23 @@ function newAction(type) {
 }
 
 function undo() {
-	socket.emit("undo");
+	socket.emit('undo');
 }
 
 function redo() {
-	socket.emit("redo");
+	socket.emit('redo');
 }
 
 function keyPressed() {
-	if (keyIsDown(CONTROL) && key == "x") {
+	if (keyIsDown(CONTROL) && key == 'x') {
 		redo();
 	}
-	if (keyIsDown(CONTROL) && key == "z") {
+	if (keyIsDown(CONTROL) && key == 'z') {
 		undo();
 	}
-	if (key == "d") {
-		socket.emit("delete");
-		console.log("deleted");
+	if (key == 'd') {
+		socket.emit('delete');
+		console.log('deleted');
 	}
 }
 
