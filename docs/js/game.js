@@ -163,6 +163,10 @@ function mousePressed() {
 				currentAction.strokes.push([mouseX, mouseY]);
 				currentAction.strokes.push([mouseX, mouseY]);
 				break;
+			case 'pencil':
+				currentAction = newAction(currentTool);
+				currentAction.strokes.push
+				break;
 			case 'bucket':
 				currentAction = newAction(currentTool);
 				actions.push(currentAction);
@@ -212,6 +216,12 @@ function newAction(type) {
 				size: penSize,
 				strokes: [],
 			};
+			break;
+		case 'pencil':
+			action = {
+				tool: 'pencil',
+				color: [red(penColor), green(penColor), blue(penColor), 255]
+			}
 			break;
 		case 'eraser':
 			action = {
