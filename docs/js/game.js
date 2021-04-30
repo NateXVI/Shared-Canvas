@@ -1,7 +1,7 @@
 let socket;
 
-const backendUrl = 'ws://localhost:3000/';
-// const backendUrl = 'https://shared-canvass.herokuapp.com/';
+// const backendUrl = 'ws://localhost:3000/';
+const backendUrl = 'https://shared-canvass.herokuapp.com/';
 let colorButtons;
 let canvas;
 let canvasParent;
