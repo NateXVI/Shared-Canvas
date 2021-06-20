@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Shared Canvas</title>
+		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<input type="text" name="room" id="room-input" class="" />
+		<button id="join-btn" class="btn btn-primary">join room</button>
+
+		<div id="toolbar">
+			<div id="color-pickers">
+				<div class="color-container">
+					<input
+						type="color"
+						name=""
+						id="stroke-color"
+						colorpick-eyedropper-active="true"
+						onchange="changeStroke()"
+						class="color-picker"
+						value="#000000"
+					/>
+					<p>stroke</p>
+				</div>
+				<div class="color-container">
+					<input
+						type="color"
+						name=""
+						id="fill-color"
+						colorpick-eyedropper-active="true"
+						onchange="changeFill()"
+						class="color-picker"
+						value="#ff0000"
+					/>
+					<p>fill</p>
+				</div>
+			</div>
+			<div id="tools-container">
+				<img
+					src="./assets/drawtool.webp"
+					alt="draw tool"
+					class="tool-icon"
+					id="btn-drawtool"
+					onclick="changeTool('drawtool')"
+				/>
+				<img
+					src="./assets/eraser.png"
+					alt="eraser"
+					class="tool-icon"
+					id="btn-eraser"
+					onclick="changeTool('eraser')"
+				/>
+				<img
+					src="./assets/polygontool.png"
+					alt="polygon tool"
+					class="tool-icon"
+					id="btn-polygontool"
+					onclick="changeTool('polygontool')"
+				/>
+				<img
+					src="./assets/polyfilltool.png"
+					alt="polygon tool"
+					class="tool-icon"
+					id="btn-polyfilltool"
+					onclick="changeTool('polyfilltool')"
+				/>
+			</div>
+			<button onclick="clearCanvas()" class="btn btn-danger">clear</button>
+		</div>
+
+		<script
+			src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			crossorigin="anonymous"
+		></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
+		<script src="./js/Random.js"></script>
+		<script src="./js/Tool.js"></script>
+		<script src="./js/tools.js"></script>
+		<script src="sketch.js"></script>
+	</body>
+</html>

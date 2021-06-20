@@ -1,0 +1,20 @@
+{
+  "name": "shared-canvas",
+  "version": "2.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NateXVI/Shared-Canvas/tree/v2.0.0"
+  },
+  "author": "Nathan Diven",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.0.1"
+  }
+}
