@@ -7,6 +7,9 @@ const io = require('socket.io')(server, {
 		methods: ['GET', 'POST'],
 	},
 });
+const cors = require('cors');
+
+app.use(cors());
 
 const port = process.env.PORT || 3000;
 const rooms = {};
