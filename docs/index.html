@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Shared Canvas</title>
+		<link rel="icon" href="./assets/icon.png" />
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<div class="main">
+			<div class="room">
+				<input
+					type="number"
+					name=""
+					id=""
+					placeholder="Room 1-5"
+					min="1"
+					max="5"
+					id="room-input"
+				/>
+				<button id="go-button">Go</button>
+			</div>
+			<div class="coords">
+				<p class="coords" id="xy">X: 0 Y: 0</p>
+				<p class="coords" id="scale">Scale: 1.00x</p>
+			</div>
+			<div class="toolbar">
+				<div class="tools">
+					<button data-tooltip="Shortcut key: 1" id="pen-tool">
+						<img src="./assets/pen.png" alt="" />
+					</button>
+					<button data-tooltip="Shortcut key: 2" id="line-tool">
+						<img src="./assets/line.png" alt="" />
+					</button>
+					<button data-tooltip="Shortcut key: E" id="erase-tool">
+						<img src="./assets/eraser.png" alt="" />
+					</button>
+					<button
+						data-tooltip="Protip: hold space to use this tool"
+						id="pan-tool"
+					>
+						<img src="./assets/grab.png" alt="" />
+					</button>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="./scripts/Tool.js"></script>
+		<script src="./scripts/DrawTool.js"></script>
+		<script src="./scripts/LineTool.js"></script>
+		<script src="./scripts/EraseTool.js"></script>
+		<script src="./scripts/PanTool.js"></script>
+		<script src="./scripts/connection.js"></script>
+		<script src="./scripts/interface.js"></script>
+		<script src="./sketch.js"></script>
+	</body>
+</html>
