@@ -1,0 +1,15 @@
+{
+  "name": "shared-canvas",
+  "version": "3.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "author": "Nathan Diven",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "socket.io": "^4.1.2"
+  }
+}
