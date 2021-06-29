@@ -3,6 +3,10 @@ class DrawTool extends Tool {
 		super();
 		this.lastPos = null;
 		this.limit = 10;
+
+		this.name = 'pencil';
+		this.messageBarInit();
+		this.setMessage('scroll to change size');
 	}
 	update() {
 		this.drawCursor();

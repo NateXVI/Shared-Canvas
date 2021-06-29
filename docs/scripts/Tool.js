@@ -1,6 +1,9 @@
 class Tool {
 	constructor() {
 		this.resetCursor();
+		this.name = 'tool';
+		this.message = new MessageBar();
+		this.messageBarInit();
 	}
 	update() {}
 	press() {}
@@ -67,9 +70,10 @@ class Tool {
 
 	drawCursor() {
 		if (isHovering) {
-			stroke(toolColor);
-			strokeWeight(toolSize);
-			point(mouse.x, mouse.y);
+			stroke(backgroundColor);
+			fill(toolColor);
+			strokeWeight(1);
+			circle(mouse.x, mouse.y, toolSize);
 		}
 	}
 
@@ -84,11 +88,27 @@ class Tool {
 		offset.y = round(offset.y);
 
 		$('#xy').text(`X: ${-offset.x} Y: ${-offset.y}`);
+		redrawInstructions();
 	}
 	setCursorVisibility(b) {
 		$('canvas').css('cursor', b ? 'auto' : 'none');
 	}
 	setCursor(v) {
 		$('canvas').css('cursor', v);
+	}
+
+	messageBarInit() {
+		this.message.clear();
+		this.message.add(`Current tool: ${this.name}`);
+	}
+
+	setMessage(message) {
+		this.messageBarInit();
+		this.message.add(message);
+	}
+
+	restoreMessages(messages) {
+		this.message.messages = messages;
+		this.message.update();
 	}
 }

@@ -1,6 +1,9 @@
 class EraseTool extends DrawTool {
 	constructor() {
 		super();
+		this.name = 'eraser';
+		this.messageBarInit();
+		this.setMessage('scroll to change size');
 	}
 
 	press(e) {
