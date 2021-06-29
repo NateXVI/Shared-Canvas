@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
 	socket.leave(socket.id);
 	console.log(`new connection ${socket.id}`);
 	joinRoom(socket, Number(1).toString());
-	sendAllInstructions(socket);
+	// sendAllInstructions(socket);
 
 	socket.on('instruction', (msg) => sendInstruction(socket, msg));
 	socket.on('joinRoom', (msg) => joinRoom(socket, msg));
