@@ -1,5 +1,5 @@
 // const socketAddress = 'ws://localhost:3000';
-const socketAddress = 'https://shared-canvass.herokuapp.com/';
+const socketAddress = 'https://shared-canvas3.herokuapp.com/';
 
 class Host {
 	constructor() {
