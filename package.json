@@ -1,19 +1,20 @@
 {
-  "name": "shared-canvas",
-  "version": "3.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodemon index.js"
-  },
-  "author": "Nathan Diven",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "http": "0.0.1-security",
-    "path": "^0.12.7",
-    "socket.io": "^4.1.2"
-  }
+	"name": "shared-canvas",
+	"version": "3.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"test": "nodemon index.js"
+	},
+	"author": "Nathan Diven",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"http": "0.0.1-security",
+		"path": "^0.12.7",
+		"socket.io": "^4.1.2"
+	}
 }
