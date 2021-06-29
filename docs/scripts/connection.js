@@ -1,4 +1,5 @@
-const socketAddress = 'ws://localhost:3000';
+// const socketAddress = 'ws://localhost:3000';
+const socketAddress = 'https://shared-canvass.herokuapp.com/';
 
 class Host {
 	constructor() {
@@ -31,5 +32,6 @@ class Host {
 	changeRoom(room) {
 		instructions = [];
 		this.socket.emit('joinRoom', room);
+		redrawInstructions();
 	}
 }
