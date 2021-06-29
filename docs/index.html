@@ -15,16 +15,16 @@
 					type="number"
 					name=""
 					id=""
-					placeholder="Room 1-5"
+					placeholder="Join rooms #1-5"
 					min="1"
 					max="5"
 					id="room-input"
 				/>
-				<button id="go-button">Go</button>
+				<button id="go-button">Join</button>
 			</div>
 			<div class="coords">
 				<p class="coords" id="xy">X: 0 Y: 0</p>
-				<p class="coords" id="scale">Scale: 1.00x</p>
+				<!-- <p class="coords" id="scale">Sca le: 1.00x</p> -->
 			</div>
 			<div class="toolbar">
 				<div class="tools">
@@ -34,17 +34,29 @@
 					<button data-tooltip="Shortcut key: 2" id="line-tool">
 						<img src="./assets/line.png" alt="" />
 					</button>
-					<button data-tooltip="Shortcut key: E" id="erase-tool">
+					<button data-tooltip="Shortcut key: 3" id="erase-tool">
 						<img src="./assets/eraser.png" alt="" />
 					</button>
-					<button
-						data-tooltip="Protip: hold space to use this tool"
-						id="pan-tool"
-					>
+					<button data-tooltip="Shortcut: hold 4" id="eyedrop-tool">
+						<img src="./assets/eyedrop.png" alt="" />
+					</button>
+					<button data-tooltip="Shortcut: hold space" id="pan-tool">
 						<img src="./assets/grab.png" alt="" />
 					</button>
+
+					<div class="color-picker">
+						<input
+							type="color"
+							name=""
+							id="color-picker"
+							class="color-picker"
+							style="border-radius: 10px"
+						/>
+					</div>
 				</div>
 			</div>
+			<section class="color-history"></section>
+			<p class="message-bar"></p>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
@@ -53,7 +65,9 @@
 		<script src="./scripts/DrawTool.js"></script>
 		<script src="./scripts/LineTool.js"></script>
 		<script src="./scripts/EraseTool.js"></script>
+		<script src="./scripts/EyedropTool.js"></script>
 		<script src="./scripts/PanTool.js"></script>
+		<script src="./scripts/MessageBar.js"></script>
 		<script src="./scripts/connection.js"></script>
 		<script src="./scripts/interface.js"></script>
 		<script src="./sketch.js"></script>
