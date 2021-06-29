@@ -48,11 +48,12 @@ div.room button {
 div.room input {
 	width: 20vw;
 	max-width: 200px;
+	padding: 10px;
 }
 
 div.room button {
-	width: 5vw;
-	max-width: 40px;
+	width: 6vw;
+	max-width: 60px;
 }
 
 div.coords {
@@ -63,6 +64,8 @@ div.coords {
 
 	background: white;
 	border-radius: 10px;
+
+	user-select: none;
 }
 
 p.coords {
@@ -100,7 +103,8 @@ div.tools button:first-child {
 	margin-top: 0;
 }
 
-div.tools button {
+div.tools button,
+div.color-picker {
 	display: block;
 	border-radius: 20px;
 	padding: 10px;
@@ -111,7 +115,8 @@ div.tools button {
 	transition: transform 0.4s;
 }
 
-div.tools button:hover {
+div.tools button:hover,
+div.color-picker:hover {
 	transform: scale(1.1);
 }
 
@@ -151,4 +156,58 @@ div.tools button img {
 
 	pointer-events: none;
 	user-select: none;
+}
+div.color-picker {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	border-radius: 10px;
+}
+input.color-picker {
+	display: block;
+	width: calc(50px + 1.6em);
+	height: calc(50px + 1.6em);
+	padding: 0;
+	margin: 0;
+	margin-top: 10px;
+	background: none;
+	border: none;
+	border-radius: 10px;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type='color']::-webkit-color-swatch {
+	border: none;
+	border-radius: 20px;
+}
+
+section.color-history {
+	position: fixed;
+	bottom: 34px;
+	padding: 1em;
+}
+
+div.color-history {
+	width: 30px;
+	height: 30px;
+
+	display: flex;
+	flex-direction: row;
+	pointer-events: all;
+}
+
+p.message-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding: 0.5em;
+	padding-right: 1em;
+	background: #777;
+	color: #e6e6e6;
+	user-select: none;
+	border-radius: 0 10px 0 0;
+
+	pointer-events: all;
 }
