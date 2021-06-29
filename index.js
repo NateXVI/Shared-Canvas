@@ -3,9 +3,9 @@ const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
-	cors: {
-		methods: ['GET', 'POST'],
-	},
+	// cors: {
+	// 	methods: ['GET', 'POST'],
+	// },
 });
 const cors = require('cors');
 
@@ -17,7 +17,7 @@ const rooms = {};
 io.on('connection', (socket) => {
 	socket.leave(socket.id);
 	console.log(`new connection ${socket.id}`);
-	joinRoom(socket, Number(0).toString());
+	joinRoom(socket, Number(1).toString());
 	sendAllInstructions(socket);
 
 	socket.on('instruction', (msg) => sendInstruction(socket, msg));
@@ -28,7 +28,7 @@ function sendInstruction(socket, instruction) {
 	const room = Array.from(socket.rooms)[0];
 	if (!rooms[room]) rooms[room] = [];
 	instruction.index = rooms[room].length + 0.5;
-	console.log(instruction);
+	// console.log(instruction);
 	rooms[room].push(instruction);
 	socket.to(room).emit('instruction', instruction);
 }
