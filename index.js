@@ -1,5 +1,4 @@
 require('dotenv').config();
-const path = require('path');
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
@@ -8,25 +7,21 @@ const io = require('socket.io')(server, {
 		methods: ['GET', 'POST'],
 	},
 });
+const cors = require('cors');
+
+// app.use(cors());
 
 const port = process.env.PORT || 3000;
-
-app.use(express.static(path.join(__dirname, 'docs')));
-
 const rooms = {};
 
 io.on('connection', (socket) => {
 	socket.leave(socket.id);
 	console.log(`new connection ${socket.id}`);
 	joinRoom(socket, Number(1).toString());
-	// sendAllInstructions(socket);
+	sendAllInstructions(socket);
 
 	socket.on('instruction', (msg) => sendInstruction(socket, msg));
 	socket.on('joinRoom', (msg) => joinRoom(socket, msg));
-});
-
-server.listen(port, () => {
-	console.log(`Server is listening on port ${port}`);
 });
 
 function sendInstruction(socket, instruction) {
@@ -54,3 +49,23 @@ function joinRoom(socket, room) {
 
 	sendAllInstructions(socket);
 }
+
+// function cleanRooms(socket) {
+// 	socket.rooms.forEach((v) => {
+// 		if (numClientsInRoom(v) == 1 && v !== 'main') {
+// 			roomShapes.delete(v);
+// 			console.log('room deleted', v);
+// 		}
+// 	});
+// }
+
+// function numClientsInRoom(room) {
+// 	try {
+// 		let clients = io.of('/').adapter.rooms.get(room).size;
+// 		return clients;
+// 	} catch (error) {
+// 		return 0;
+// 	}
+// }
+
+server.listen(port, () => console.log(`Server is listening on port ${port}`));
