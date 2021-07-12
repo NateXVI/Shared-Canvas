@@ -2,7 +2,7 @@ class DrawTool extends Tool {
 	constructor() {
 		super();
 		this.lastPos = null;
-		this.limit = 10;
+		this.limit = 20;
 
 		this.name = 'pencil';
 		this.messageBarInit();
@@ -10,6 +10,13 @@ class DrawTool extends Tool {
 	}
 	update() {
 		this.drawCursor();
+
+		if (mouseIsPressed && this.lastPos != null) {
+			stroke(toolColor);
+			if (this.name == 'eraser') stroke(backgroundColor);
+			strokeWeight(toolSize);
+			line(this.lastPos.x, this.lastPos.y, mouse.x, mouse.y);
+		}
 	}
 	press(e) {
 		if (e.button === 0 && isHovering) {
@@ -26,6 +33,11 @@ class DrawTool extends Tool {
 		}
 	}
 	release() {
+		if (isHovering) {
+			if (this.name == 'eraser')
+				this.eraseLine(this.lastPos.x, this.lastPos.y, mouse.x, mouse.y);
+			else this.drawLine(this.lastPos.x, this.lastPos.y, mouse.x, mouse.y);
+		}
 		this.lastPos = null;
 	}
 }
